@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 纯CSS实现微信列表左滑显示按钮的交互效果 -->
+    <div class="list">
+        <button class="button" data-type="danger">删除</button>
+        <a href="javascript:" class="content">我是列表，试试左滑我</a>
+        <s class="space"></s>
+    </div>
+</body>
+
+</html>
+
+<style>
+    /*绝对定位元素的包含块在滚动容器之外，那么这个容器滚动的时候，绝对定位元素是不会跟着滚动的。*/
+
+    /* 列表仅水平滚动 */
+    .list {
+        display: flex;
+        overflow-y: hidden;
+        /*Scroll Snap与按钮边缘定位,CSS Scroll Snap是CSS中一个独立的模块，定义了在滚动行为中，滚动停止的位置可以根据子元素的位置决定*/
+        scroll-snap-type: x mandatory;
+        /* 3D透视与按钮富有层次的视差滚动出现 */
+        perspective: 1px;
+        transform-style: preserve-3d;
+        perspective-origin: 100% 50%;
+    }
+
+    /* 主内容宽度100%，白色背景覆盖 */
+    .content {
+        flex: 0 0 100vw;
+        background-color: #fff;
+        position: relative;
+        scroll-snap-align: start;
+    }
+
+    /* 空标签元素，作用是腾出水平滚动空间 */
+    .space {
+        flex: 0 0 8rem;
+        scroll-snap-align: end;
+    }
+
+    /* 按钮绝对定位，藏在内容白色背景后面 */
+    .button {
+        width: 4rem;
+        position: absolute;
+        right: 0;
+    }
+
+    .button:last-of-type {
+        transform: translate3D(2rem, 0, -1px) scale(2);
+    }
+
+    .button:first-of-type {
+        transform: translate3D(2rem, 0, -3px) scale(4);
+    }
+</style>
